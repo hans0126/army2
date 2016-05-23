@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="lib/main.js"></script>
+</head>
+
+<body ng-controller='main as m'>
+    <ul>
+        <li ng-repeat="val in m.cardList" ng-click="m.viewCard(val)">{{val.cardName}}</li>
+    </ul>
+    <hr/>
+    <div ng-show="m.viewingCard">
+        <table>
+            <tr>
+                <td colspan="3">{{m.viewingCard.cardName}}</td>
+            </tr>
+            <tr>
+                <td colspan="3">{{m.viewingCard.faction}} <span ng-if="m.viewingCard.epic">epic</span> {{m.viewingCard.category}} </td>
+            </tr>
+            <tr>
+                <td>FA</td>
+                <td>WJ</td>
+                <td>PC</td>
+            </tr>
+            <tr>
+                <td>{{m.viewingCard.fa}}</td>
+                <td>{{m.viewingCard.wj}}</td>
+                <td>
+                    <ul ng-if="m.viewingCard.pc">
+                        <li ng-repeat="val in m.viewingCard.pc"></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <table ng-repeat="val in m.viewingCard.role">
+			 <tr>
+                <td colspan="4">Role Name</td>
+            	<td>focus</td>
+            	<td>threshold</td>
+            	<td>--</td>
+            </tr>
+            <tr>
+                <td colspan="4">{{val.roleName}}</td>
+            	<td>{{val.focus}}</td>
+            	<td>{{val.threshold}}</td>
+            	<td>--</td>
+            </tr>
+            <tr>
+                <td>spd</td>
+                <td>str</td>
+                <td>mat</td>
+                <td>rat</td>
+                <td>def</td>
+                <td>arm</td>
+                <td>cmd</td>
+            </tr>
+            <tr>
+                <td>{{val.status.spd}}</td>
+                <td>{{val.status.str}}</td>
+                <td>{{val.status.mat}}</td>
+                <td>{{val.status.rat}}</td>
+                <td>{{val.status.def}}</td>
+                <td>{{val.status.arm}}</td>
+                <td>{{val.status.cmd}}</td>
+            </tr>
+         
+        </table>
+        <button ng-click="m.selectCard(m.viewingCard)">selecte</button>
+    </div>
+    <hr/>
+	<table>
+			<thead>				
+				<tr>
+					<td>card</td>
+					<td>pc</td>
+					<td>fa</td>
+					<td>wj</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody ng-repeat="val in m.selectedList.cardList">
+					<tr>
+						<td>{{val.cardName}}</td>
+						<td>{{val.pc}}</td>
+						<td>{{val.fa}}</td>
+						<td>{{val.wj}}</td>
+						<td>{{val.faction}}</td>
+
+					</tr>
+
+
+
+			</tbody>
+
+
+	</table>
+
+</body>
+
+</html>
