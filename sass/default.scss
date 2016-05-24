@@ -1,0 +1,27 @@
+@import "compass/reset";
+@import "compass/css3";
+* {
+    @include box-sizing(content-box);
+
+}
+
+.table_style {
+    border: 1px solid #aaa;
+    margin-bottom: 10px;
+    td,
+    th {
+        padding: 10px;
+        border-right: 1px solid #aaa;
+        border-bottom: 1px solid #aaa;
+        text-align: center;
+    }
+    th {
+        text-transform: uppercase;
+        background-color: #666;
+        color:#fff;
+    }
+}
+
+.link_disabled {
+	color:#aaa;
+}

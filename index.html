@@ -6,42 +6,52 @@
     <title>Document</title>
     <script src="node_modules/angular/angular.min.js"></script>
     <script src="lib/main.js"></script>
+    <link rel="stylesheet" href="css/default.css">
 </head>
 
 <body ng-controller='main as m'>
     <ul>
-        <li ng-repeat="val in m.cardList" ng-click="m.viewCard(val)">{{val.cardName}}</li>
+        <li ng-repeat="val in m.cardList" ng-click="m.viewCard(val)" ng-class='m.cardSelectClass(val)'>{{val.cardName}}</li>
     </ul>
+    {{m.selectedList.currentPoint}}/{{m.selectedList.limitPoint+m.selectedList.extraPoint}}
     <hr/>
-    <div ng-show="m.viewingCard">
-        <table>
+    <div ng-if="m.viewingCard">
+        <table class="table_style">
             <tr>
                 <td colspan="3">{{m.viewingCard.cardName}}</td>
             </tr>
             <tr>
                 <td colspan="3">{{m.viewingCard.faction}} <span ng-if="m.viewingCard.epic">epic</span> {{m.viewingCard.category}} </td>
             </tr>
-            <tr>
-                <td>FA</td>
-                <td>WJ</td>
-                <td>PC</td>
+            <tr class="lable_title">
+                <th>fa</th>
+                <th>wj</th>
+                <th>pc</th>
             </tr>
             <tr>
                 <td>{{m.viewingCard.fa}}</td>
                 <td>{{m.viewingCard.wj}}</td>
                 <td>
-                    <ul ng-if="m.viewingCard.pc">
-                        <li ng-repeat="val in m.viewingCard.pc"></li>
+                    <ul ng-if="m.viewingCard.pc.length > 0">
+                        <li ng-repeat="val in m.viewingCard.pc">
+                            <label>{{val.content}} : {{val.pc}} 
+                                <input 
+                                type="radio" 
+                                ng-model="m.viewingCard.pcCurrent"
+                                ng-value = "val"                               
+                                ng-disabled='!val.sys_canSelect'>
+                            </label> 
+                        </li>
                     </ul>
                 </td>
             </tr>
         </table>
-        <table ng-repeat="val in m.viewingCard.role">
-			 <tr>
-                <td colspan="4">Role Name</td>
-            	<td>focus</td>
-            	<td>threshold</td>
-            	<td>--</td>
+        <table class="table_style" ng-repeat="val in m.viewingCard.role">
+			 <tr >
+                <th colspan="4">role name</th>
+            	<th>focus</th>
+            	<th>threshold</th>
+            	<th>--</th>
             </tr>
             <tr>
                 <td colspan="4">{{val.roleName}}</td>
@@ -50,13 +60,13 @@
             	<td>--</td>
             </tr>
             <tr>
-                <td>spd</td>
-                <td>str</td>
-                <td>mat</td>
-                <td>rat</td>
-                <td>def</td>
-                <td>arm</td>
-                <td>cmd</td>
+                <th>spd</th>
+                <th>str</th>
+                <th>mat</th>
+                <th>rat</th>
+                <th>def</th>
+                <th>arm</th>
+                <th>cmd</th>
             </tr>
             <tr>
                 <td>{{val.status.spd}}</td>
@@ -69,23 +79,28 @@
             </tr>
          
         </table>
-        <button ng-click="m.selectCard(m.viewingCard)">selecte</button>
+        <button ng-click="m.selectCard(m.viewingCard)" ng-disabled='m.selectCardDisabled(m.viewingCard)'>selecte</button>
     </div>
     <hr/>
-	<table>
+	<table class="table_style">
 			<thead>				
 				<tr>
-					<td>card</td>
-					<td>pc</td>
-					<td>fa</td>
-					<td>wj</td>
-					<td></td>
+					<th>card</th>
+					<th>pc</th>
+					<th>fa</th>
+					<th>wj</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody ng-repeat="val in m.selectedList.cardList">
 					<tr>
 						<td>{{val.cardName}}</td>
-						<td>{{val.pc}}</td>
+						<td ng-switch="m.pcSwitch(val.pc)" >
+                             <div ng-switch-when="pc">{{val.pc}}</div>
+                             <div ng-switch-when="pcs">{{val.pcCurrent.content}} / {{val.pcCurrent.pc}}</div>
+                            
+
+                        </td>
 						<td>{{val.fa}}</td>
 						<td>{{val.wj}}</td>
 						<td>{{val.faction}}</td>
