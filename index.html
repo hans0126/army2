@@ -13,7 +13,8 @@
     <ul>
         <li ng-repeat="val in m.cardList" ng-click="m.viewCard(val)" ng-class='m.cardSelectClass(val)'>{{val.cardName}}</li>
     </ul>
-    {{m.selectedList.currentPoint}}/{{m.selectedList.limitPoint+m.selectedList.extraPoint}}
+    {{m.selectedList.currentPoint}}/{{m.selectedList.limitPoint+m.selectedList.extraPoint}}<br/>
+    <button ng-click="m.resetAll()">reset</button>
     <hr/>
     <div ng-if="m.viewingCard">
         <table class="table_style">
