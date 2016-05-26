@@ -70,12 +70,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   box-sizing: content-box;
 }
 
-/* line 8, ../sass/default.scss */
+/* line 9, ../sass/default.scss */
 .table_style {
   border: 1px solid #aaa;
   margin-bottom: 10px;
 }
-/* line 11, ../sass/default.scss */
+/* line 12, ../sass/default.scss */
 .table_style td,
 .table_style th {
   padding: 10px;
@@ -83,14 +83,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   border-bottom: 1px solid #aaa;
   text-align: center;
 }
-/* line 18, ../sass/default.scss */
+/* line 19, ../sass/default.scss */
 .table_style th {
   text-transform: uppercase;
   background-color: #666;
   color: #fff;
 }
 
-/* line 25, ../sass/default.scss */
+/* line 26, ../sass/default.scss */
 .link_disabled {
   color: #aaa;
+}
+
+/* line 30, ../sass/default.scss */
+.nameTitle {
+  text-transform: capitalize;
 }

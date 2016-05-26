@@ -2,6 +2,7 @@
 @import "compass/css3";
 * {
     @include box-sizing(content-box);
+   
 
 }
 
@@ -24,4 +25,8 @@
 
 .link_disabled {
 	color:#aaa;
+}
+
+.nameTitle {
+    text-transform:capitalize;
 }
