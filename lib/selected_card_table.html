@@ -1,0 +1,57 @@
+<table class="table_style">
+    <thead>
+        <tr>
+            <th>card</th>
+            <th>spd</th>
+            <th>str</th>
+            <th>mat</th>
+            <th>rat</th>
+            <th>def</th>
+            <th>arm</th>
+            <th>cmd</th>
+            <th>pc</th>
+            <th>fa</th>
+            <th>wj</th>
+            <th>categroy</th>
+            <th>faction</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody ng-repeat="val in cardList">
+        <tr>
+            <td class="nameTitle">{{val.cardName}}</td>
+            <td>{{val.role[0].status.spd | nullToNA}}</td>
+            <td>{{val.role[0].status.str | nullToNA}}</td>
+            <td>{{val.role[0].status.mat | nullToNA}}</td>
+            <td>{{val.role[0].status.rat | nullToNA}}</td>
+            <td>{{val.role[0].status.def | nullToNA}}</td>
+            <td>{{val.role[0].status.arm | nullToNA}}</td>
+            <td>{{val.role[0].status.cmd | nullToNA}}</td>
+            <td ng-switch="pcSwitch({card:val.pc})">
+                <div ng-switch-when="pc">{{val.pc | nullToNA}}</div>
+                <div ng-switch-when="pcs">{{val.pcCurrent.content}} / {{val.pcCurrent.pc}}</div>
+            </td>
+            <td>{{val.fa}}</td>
+            <td>{{val.wj | nullToNA}}</td>
+            <td>{{val.category}}</td>
+            <td>{{val.faction}}</td>
+            <td><button ng-click="removeCard({card:val})">delete</button></td>   
+        </tr>
+        <tr ng-if="val.role.length > 0 && key !=0 " ng-repeat="(key,value) in val.role">
+            <td>{{value.roleName}}</td>
+            <td>{{value.status.spd | nullToNA}}</td>
+            <td>{{value.status.str | nullToNA}}</td>
+            <td>{{value.status.mat | nullToNA}}</td>
+            <td>{{value.status.rat | nullToNA}}</td>
+            <td>{{value.status.def | nullToNA}}</td>
+            <td>{{value.status.arm | nullToNA}}</td>
+            <td>{{value.status.cmd | nullToNA}}</td>
+            <td>{{null | nullToNA}}</td>
+            <td>{{null | nullToNA}}</td>
+            <td>{{null | nullToNA}}</td>
+            <td>{{null | nullToNA}}</td>
+            <td>{{null | nullToNA}}</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

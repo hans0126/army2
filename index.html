@@ -6,6 +6,10 @@
     <title>Document</title>
     <script src="node_modules/angular/angular.min.js"></script>
     <script src="lib/main.js"></script>
+    <script src="lib/main_directive.js"></script>
+    <script src="lib/filter.js"></script>
+    <script src="lib/main_service.js"></script>
+    <script src="lib/main_factory.js"></script>
     <link rel="stylesheet" href="css/default.css">
 </head>
 
@@ -15,181 +19,14 @@
     </ul>
     {{m.selectedList.currentPoint}}/{{m.selectedList.limitPoint+m.selectedList.extraPoint}}
     <hr/>
-    <div ng-if="m.viewingCard">
-        <table class="table_style">
-            <tr>
-                <td colspan="5" class="nameTitle">{{m.viewingCard.cardName}}</td>
-            </tr>
-            <tr>
-                <td colspan="5" class="nameTitle">{{m.viewingCard.subCardName}}</td>
-            </tr>
-            <tr class="lable_title">
-                <th>category</th>
-                <th>sub category</th>
-                <th>fa</th>
-                <th>wj</th>
-                <th>pc</th>
-            </tr>
-            <tr>
-                <td>{{m.viewingCard.category}}</td>
-                <td>{{m.viewingCard.subCategory | nullToNA}}</td>
-                <td>{{m.viewingCard.fa}}</td>
-                <td>{{m.viewingCard.wj | nullToNA}}</td>
-                <td ng-switch="m.pcSwitch(m.viewingCard.pc)">
-                    <ul ng-switch-when="pcs">
-                        <li ng-repeat="val in m.viewingCard.pc">
-                            <label>{{val.content}} : {{val.pc}}
-                                <input type="radio" ng-model="m.viewingCard.pcCurrent" ng-value="val" ng-disabled='!val.sys_canSelect'>
-                            </label>
-                        </li>
-                    </ul>
-                    <span ng-switch-when="pc">{{m.viewingCard.pc | nullToNA}}</span>
-                </td>
-            </tr>
-        </table>
-        <table class="table_style" ng-repeat="val in m.viewingCard.role">
-            <tr>
-                <th colspan="4">role name</th>
-                <th>focus</th>
-                <th colspan="2">threshold</th>
-            </tr>
-            <tr>
-                <td colspan="4" class="nameTitle">{{val.roleName}}</td>
-                <td>{{val.focus | nullToNA}}</td>
-                <td colspan="2">{{val.threshold | nullToNA}}</td>
-            </tr>
-            <tr>
-                <th>spd</th>
-                <th>str</th>
-                <th>mat</th>
-                <th>rat</th>
-                <th>def</th>
-                <th>arm</th>
-                <th>cmd</th>
-            </tr>
-            <tr>
-                <td>{{val.status.spd | nullToNA}}</td>
-                <td>{{val.status.str | nullToNA}}</td>
-                <td>{{val.status.mat | nullToNA}}</td>
-                <td>{{val.status.rat | nullToNA}}</td>
-                <td>{{val.status.def | nullToNA}}</td>
-                <td>{{val.status.arm | nullToNA}}</td>
-                <td>{{val.status.cmd | nullToNA}}</td>
-            </tr>
-        </table>
-        <button ng-click="m.selectCard(m.viewingCard)" ng-disabled='m.selectCardDisabled(m.viewingCard)'>selecte</button>
-        <!-- attechmet -->
-        <div ng-repeat="val in m.attechmentList">
-            <table class="table_style">
-                <tr>
-                    <td colspan="5" class="nameTitle">{{val.cardName}}</td>
-                </tr>
-                <tr>
-                    <td colspan="5" class="nameTitle">{{val.subCardName}}</td>
-                </tr>
-                <tr class="lable_title">
-                    <th>category</th>
-                    <th>sub category</th>
-                    <th>fa</th>
-                    <th>wj</th>
-                    <th>pc</th>
-                </tr>
-                <tr>
-                    <td>{{val.category}}</td>
-                    <td>{{val.subCategory | nullToNA}}</td>
-                    <td>{{val.fa}}</td>
-                    <td>{{val.wj | nullToNA}}</td>
-                    <td>{{val.pc | nullToNA}}</td>
-                </tr>
-            </table>
-            <table class="table_style" ng-repeat="role in val.role">
-                <tr>
-                    <th colspan="4">role name</th>
-                    <th>focus</th>
-                    <th colspan="2">threshold</th>
-                </tr>
-                <tr>
-                    <td colspan="4" class="nameTitle">{{role.roleName}}</td>
-                    <td>{{role.focus | nullToNA}}</td>
-                    <td colspan="2">{{role.threshold | nullToNA}}</td>
-                </tr>
-                <tr>
-                    <th>spd</th>
-                    <th>str</th>
-                    <th>mat</th>
-                    <th>rat</th>
-                    <th>def</th>
-                    <th>arm</th>
-                    <th>cmd</th>
-                </tr>
-                <tr>
-                    <td>{{role.status.spd | nullToNA}}</td>
-                    <td>{{role.status.str | nullToNA}}</td>
-                    <td>{{role.status.mat | nullToNA}}</td>
-                    <td>{{role.status.rat | nullToNA}}</td>
-                    <td>{{role.status.def | nullToNA}}</td>
-                    <td>{{role.status.arm | nullToNA}}</td>
-                    <td>{{role.status.cmd | nullToNA}}</td>
-                </tr>
-            </table>
-            <button ng-click="m.selectCard(val)" ng-disabled='m.selectCardDisabled(val)'>selecte</button>
+    <div card-table="m.viewingCard" select-card-fn="m.selectCard(card)" disabled-btn-fn="m.selectCardDisabled(card)" pc-switch-fn="m.pcSwitch(card)" ng-if="m.viewingCard"></div>
+    <!-- attechmet -->
+    <div ng-repeat="val in m.attechmentList ">
+        <div card-table="val" select-card-fn="m.selectCard(card)" pc-switch-fn="m.pcSwitch(card)" disabled-btn-fn="m.selectCardDisabled(card)">
         </div>
     </div>
     <hr/>
-    <table class="table_style">
-        <thead>
-            <tr>
-                <th>card</th>
-                <th>spd</th>
-                <th>str</th>
-                <th>mat</th>
-                <th>rat</th>
-                <th>def</th>
-                <th>arm</th>
-                <th>cmd</th>
-                <th>pc</th>
-                <th>fa</th>
-                <th>wj</th>
-                <th>categroy</th>
-                <th>faction</th>
-            </tr>
-        </thead>
-        <tbody ng-repeat="val in m.selectedList.cardList">
-            <tr>
-                <td class="nameTitle">{{val.cardName}}</td>
-                <td>{{val.role[0].status.spd | nullToNA}}</td>
-                <td>{{val.role[0].status.str | nullToNA}}</td>
-                <td>{{val.role[0].status.mat | nullToNA}}</td>
-                <td>{{val.role[0].status.rat | nullToNA}}</td>
-                <td>{{val.role[0].status.def | nullToNA}}</td>
-                <td>{{val.role[0].status.arm | nullToNA}}</td>
-                <td>{{val.role[0].status.cmd | nullToNA}}</td>
-                <td ng-switch="m.pcSwitch(val.pc)">
-                    <div ng-switch-when="pc">{{val.pc | nullToNA}}</div>
-                    <div ng-switch-when="pcs">{{val.pcCurrent.content}} / {{val.pcCurrent.pc}}</div>
-                </td>
-                <td>{{val.fa}}</td>
-                <td>{{val.wj | nullToNA}}</td>
-                <td>{{val.category}}</td>
-                <td>{{val.faction}}</td>
-            </tr>
-            <tr ng-if="val.role.length > 0 && key !=0 " ng-repeat="(key,value) in val.role">
-                <td>{{value.roleName}}</td>
-                <td>{{value.status.spd | nullToNA}}</td>
-                <td>{{value.status.str | nullToNA}}</td>
-                <td>{{value.status.mat | nullToNA}}</td>
-                <td>{{value.status.rat | nullToNA}}</td>
-                <td>{{value.status.def | nullToNA}}</td>
-                <td>{{value.status.arm | nullToNA}}</td>
-                <td>{{value.status.cmd | nullToNA}}</td>
-                <td>{{null | nullToNA}}</td>
-                <td>{{null | nullToNA}}</td>
-                <td>{{null | nullToNA}}</td>
-                <td>{{null | nullToNA}}</td>
-                <td>{{null | nullToNA}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div selected-card-table="m.selectedList.cardList" pc-switch-fn="m.pcSwitch(card)" remove-card-fn="m.removeCardFromSelectedList(card)"></div>
 </body>
 
 </html>
